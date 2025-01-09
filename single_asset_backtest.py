@@ -1,7 +1,7 @@
 # Imports to add the trade master directory in search path
 import os
 import sys
-sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
+#sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), '..')))
 
 # Import to elimate unnecessary warnings
 import warnings
@@ -31,8 +31,8 @@ class AdxTrendStrategy(Strategy):
 
     def init(self):
         self.adx = self.I(self.data.df.ta.adx(self.adx_period)[f"ADX_{self.adx_period}"])
-        self.trade_management_strategy = ATR_RR_TradeManagement(self) # Just pass the strategy object in the trade mgt class
-        self.risk_management_strategy = EqualRiskManagement(self) # Just pass the strategy object in the risk mgt class
+        self.trade_management_strategy = ATR_RR_TradeManagement(self,self.risk_reward_ratio,self.atr_multiplier,self.atr_period) # Just pass the strategy object in the trade mgt class
+        self.risk_management_strategy = EqualRiskManagement(self,self.initial_risk_per_trade) # Just pass the strategy object in the risk mgt class
         self.total_trades = len(self.closed_trades)
 
     def next(self):
